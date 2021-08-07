@@ -1,12 +1,18 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useLayoutEffect, useReducer } from 'react';
 import { MapManager } from '../core';
+import { EventName } from '../core/eventEmitter';
 
 export const MapManagerContext = createContext<MapManager | null>(null);
 
-export function useMap() {
-  return useContext(MapManagerContext) ?? fail('useMap called out of map');
-}
+export function useMap(events: EventName[] = []) {
+  const [, update] = useReducer(v => !v, false);
+  const map = useContext(MapManagerContext);
+  if (!map) throw 'useMap called out of map';
 
-function fail<T>(m: string): Required<T> {
-  throw m;
+  useLayoutEffect(() => {
+    events.forEach(e => map.on(e, update));
+    return () => events.forEach(e => map.off(e, update));
+  }, events);
+
+  return map;
 }

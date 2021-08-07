@@ -9,11 +9,13 @@ interface MapProps {
 }
 
 export function Map({ children, ...props }: MapProps) {
-  const [map, setMM] = useState<MapManager>();
+  const [map, setMap] = useState<MapManager>();
   const create = useCallback((r: HTMLDivElement | null) => {
     if (r) {
-      const createdMap = createMapManager(r);
-      setMM(createdMap);
+      const m = createMapManager(r);
+      setMap(m);
+    } else if (map) {
+      map.dispose();
     }
   }, []);
 

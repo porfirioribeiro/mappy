@@ -4,9 +4,9 @@ import { useMap } from './context';
 interface TileLayerProps {}
 
 export function TileLayer(props: TileLayerProps) {
-  const map = useMap();
+  const map = useMap(['size']);
 
-  console.log(map.container);
+  console.log(map.size);
 
   return <div>Tile layer</div>;
 }
