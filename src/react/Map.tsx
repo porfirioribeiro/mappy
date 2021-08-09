@@ -12,7 +12,7 @@ export function Map({ children, ...props }: MapProps) {
   const [map, setMap] = useState<MapManager>();
   const create = useCallback((r: HTMLDivElement | null) => {
     if (r) {
-      const m = createMapManager(r);
+      const m = createMapManager(r, {});
       setMap(m);
     } else if (map) {
       map.dispose();
@@ -20,7 +20,7 @@ export function Map({ children, ...props }: MapProps) {
   }, []);
 
   return (
-    <div ref={create} {...props}>
+    <div ref={create} {...props} style={{ position: 'relative', overflow: 'hidden' }}>
       {map && <MapManagerContext.Provider value={map}>{children}</MapManagerContext.Provider>}
     </div>
   );
