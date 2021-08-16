@@ -11,7 +11,6 @@ import {
   TileValues,
   tileValues,
 } from './tile';
-import { dragManager as createDragManager } from './dragManager';
 
 export interface MapManager extends Pick<Emitter<Events>, 'on' | 'off'> {
   container: HTMLDivElement;
@@ -77,8 +76,8 @@ export interface MapManagerProps {
 }
 
 const defaultProps = {
-  defaultZoom: 14,
-  defaultCenter: [0, 0],
+  defaultZoom: 1,
+  defaultCenter: [29, 0],
 
   animate: true,
   animateMaxScreens: 5,
@@ -115,11 +114,10 @@ const WARNING_DISPLAY_TIMEOUT = 300;
 
 const NOOP = () => true;
 
-export function createMapManager(
-  container: HTMLDivElement,
-  dprops: Omit<MapManagerProps, keyof typeof defaultProps> &
-    Partial<Pick<MapManagerProps, keyof typeof defaultProps>>,
-): MapManager {
+export type MapManagerOptions = Omit<MapManagerProps, keyof typeof defaultProps> &
+  Partial<Pick<MapManagerProps, keyof typeof defaultProps>>;
+
+export function createMapManager(container: HTMLDivElement, dprops: MapManagerOptions): MapManager {
   const props: MapManagerProps = Object.assign({}, defaultProps, dprops);
   const mitt = createEmitter<Events>();
   let _mousePosition: Pixel | undefined;

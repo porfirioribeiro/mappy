@@ -26,11 +26,6 @@ export const gmapsTileProvider: TileProvider = {
 
 // todo
 
-export function osm(x: number, y: number, z: number): string {
-  const s = String.fromCharCode(97 + ((x + y + z) % 3));
-  return `https://${s}.tile.openstreetmap.org/${z}/${x}/${y}.png`;
-}
-
 export function getTileUrl(
   { url, subdomains }: TileProvider,
   tileX: number,

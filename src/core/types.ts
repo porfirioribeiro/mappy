@@ -24,3 +24,13 @@ export interface MoveEvent {
   timestamp: number;
   coords: Pixel;
 }
+
+export interface Tile {
+  key: string;
+  url: string;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  active: boolean;
+}
